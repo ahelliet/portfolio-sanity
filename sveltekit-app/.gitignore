@@ -12,3 +12,6 @@ vite.config.ts.timestamp-*
 test-results
 CLAUDE.md
 .mcp.json
+
+*storybook.log
+storybook-static
