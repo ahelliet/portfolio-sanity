@@ -1,13 +1,10 @@
-import {postsQuery as query, type Post} from '$lib/sanity/queries'
+import {homePageQuery as query, type HomePage} from '$lib/sanity/queries'
 import type {PageServerLoad} from './$types'
 
 export const load: PageServerLoad = async ({locals}) => {
   const {loadQuery} = locals.sanity
-  const initial = await loadQuery<Post[]>(query)
+  const initial = await loadQuery<HomePage>(query)
 
-  // We pass the data in a format that is easy for `useQuery` to consume in the
-  // corresponding `+page.svelte` file, but you can return the data in any
-  // format you like.
   return {
     query,
     options: {initial},
