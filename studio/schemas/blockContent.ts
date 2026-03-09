@@ -16,6 +16,12 @@ export default defineType({
   type: 'array',
   of: [
     defineArrayMember({
+      type: 'code',
+    }),
+    defineArrayMember({
+      type: 'mermaid',
+    }),
+    defineArrayMember({
       title: 'Block',
       type: 'block',
       // Styles let you set what your user can mark up blocks with. These
