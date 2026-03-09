@@ -5,6 +5,7 @@ import { presentationTool } from 'sanity/presentation'
 import { frFRLocale } from '@sanity/locale-fr-fr'
 
 import { schemaTypes } from './schemas'
+import { structure } from './structure'
 import { codeInput } from '@sanity/code-input'
 import { media } from 'sanity-plugin-media'
 import { dashboardTool, projectInfoWidget, projectUsersWidget } from '@sanity/dashboard'
@@ -24,7 +25,7 @@ export default defineConfig({
         projectUsersWidget(),
       ]
     }),
-    structureTool(),
+    structureTool({structure}),
     presentationTool({
       previewUrl: {
         origin:

@@ -1,4 +1,4 @@
-import { defineField, defineType } from 'sanity'
+import {defineField, defineType, defineArrayMember} from 'sanity'
 
 export default defineType({
   name: 'post',
@@ -9,6 +9,7 @@ export default defineType({
       name: 'title',
       title: 'Title',
       type: 'string',
+      validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: 'slug',
@@ -28,16 +29,40 @@ export default defineType({
     }),
     defineField({
       name: 'mainImage',
-      title: 'Main image',
+      title: 'Cover Image',
       type: 'image',
       options: {
         hotspot: true,
       },
     }),
     defineField({
+      name: 'author',
+      title: 'Author',
+      type: 'reference',
+      to: [{type: 'author'}],
+    }),
+    defineField({
+      name: 'tags',
+      title: 'Tags',
+      type: 'array',
+      of: [defineArrayMember({type: 'string'})],
+      options: {layout: 'tags'},
+    }),
+    defineField({
+      name: 'readingTime',
+      title: 'Reading Time (minutes)',
+      type: 'number',
+    }),
+    defineField({
       name: 'body',
       title: 'Body',
       type: 'blockContent',
+    }),
+    defineField({
+      name: 'relatedPosts',
+      title: 'Related Posts',
+      type: 'array',
+      of: [defineArrayMember({type: 'reference', to: [{type: 'post'}]})],
     }),
   ],
   preview: {
@@ -47,8 +72,8 @@ export default defineType({
       media: 'mainImage',
     },
     prepare(selection) {
-      const { author } = selection
-      return { ...selection, subtitle: author && `by ${author}` }
+      const {author} = selection
+      return {...selection, subtitle: author && `by ${author}`}
     },
   },
 })
