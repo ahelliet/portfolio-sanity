@@ -9,6 +9,7 @@
 	import Footer from '$lib/components/Footer.svelte';
 
 	import { ModeWatcher } from "mode-watcher";
+	import Toaster from "$lib/components/ui/sonner/sonner.svelte";
 
 	const { children, data }: LayoutProps = $props();
 
@@ -17,6 +18,7 @@
 </script>
 
 <ModeWatcher />
+<Toaster />
 <PreviewMode enabled={previewEnabled}>
 	<VisualEditing enabled={previewEnabled}>
 		<QueryLoader enabled={previewEnabled} client={client}>

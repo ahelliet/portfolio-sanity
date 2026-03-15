@@ -1,7 +1,8 @@
 import {pageBySlugQuery, postsQuery, projectsQuery} from '$lib/sanity/queries'
 import type {Page, Post, Project} from '$lib/sanity/queries'
+import {handleContactForm} from '$lib/server/contact'
 import {error} from '@sveltejs/kit'
-import type {PageServerLoad} from './$types'
+import type {Actions, PageServerLoad} from './$types'
 
 export const load: PageServerLoad = async ({params, locals}) => {
   const {loadQuery} = locals.sanity
@@ -24,4 +25,8 @@ export const load: PageServerLoad = async ({params, locals}) => {
   ])
 
   return {page, posts, projects}
+}
+
+export const actions: Actions = {
+  contact: handleContactForm,
 }

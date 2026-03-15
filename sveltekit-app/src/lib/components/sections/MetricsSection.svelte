@@ -23,7 +23,7 @@
 			<div class="grid grid-cols-1 gap-12 md:grid-cols-3">
 				{#each section.items as metric}
 					<div class="flex flex-col gap-2 border-t border-border pt-8">
-						<span class="text-4xl font-bold text-orange-600">{metric.value}</span>
+						<span class="text-4xl font-bold text-primary">{metric.value}</span>
 						<span class="font-medium">{metric.label}</span>
 						{#if metric.description}
 							<span class="text-sm text-muted-foreground">{metric.description}</span>

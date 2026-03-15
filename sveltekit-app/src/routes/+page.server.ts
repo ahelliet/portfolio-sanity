@@ -1,6 +1,7 @@
 import {homepageQuery, postsQuery, projectsQuery} from '$lib/sanity/queries'
 import type {Page, Post, Project} from '$lib/sanity/queries'
-import type {PageServerLoad} from './$types'
+import {handleContactForm} from '$lib/server/contact'
+import type {Actions, PageServerLoad} from './$types'
 
 export const load: PageServerLoad = async ({locals}) => {
   const {loadQuery} = locals.sanity
@@ -12,4 +13,8 @@ export const load: PageServerLoad = async ({locals}) => {
     ])
 
   return {page, posts, projects}
+}
+
+export const actions: Actions = {
+  contact: handleContactForm,
 }

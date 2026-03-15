@@ -3,8 +3,7 @@
 	import { urlFor } from "$lib/sanity/image";
 	import type { SectionRichText } from "$lib/sanity/queries";
 	import SectionHeader from "./SectionHeader.svelte";
-	import Code from "../Code.svelte";
-	import Mermaid from "../Mermaid.svelte";
+	import { portableTextComponents } from "$lib/components/portable-text";
 
 	interface Props {
 		section: SectionRichText;
@@ -35,15 +34,10 @@
 					<h2 class="font-serif text-3xl italic">{section.title}</h2>
 				{/if}
 				{#if section.body}
-					<div class="prose prose-invert max-w-none">
+					<div>
 						<PortableText
 							value={section.body}
-							components={{
-								types: {
-									code: Code,
-									mermaid: Mermaid,
-								},
-							}}
+							components={portableTextComponents}
 						/>
 					</div>
 				{/if}

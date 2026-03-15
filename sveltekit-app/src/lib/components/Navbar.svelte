@@ -28,7 +28,7 @@
 	};
 </script>
 
-<nav class="absolute top-0 left-0 right-0 z-50">
+<nav class="sticky top-0 z-50 bg-background/80 backdrop-blur-md">
 	<div class="flex items-center justify-between py-5 px-20">
 		<!-- Left side -->
 		<div class="flex items-center gap-12">

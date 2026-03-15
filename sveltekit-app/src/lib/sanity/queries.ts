@@ -14,11 +14,36 @@ const linkProjection = `{
   }
 }`
 
+const resolvedLinkProjection = `{
+  ...,
+  internalLink->{_type, slug, title},
+  "mediaUrl": mediaLink.asset->url,
+  "mediaOriginalFilename": mediaLink.asset->originalFilename
+}`
+
 const sectionsProjection = `sections[] {
   ...,
   _type == "section.hero" => {
     ...,
     ctas[] ${linkProjection}
+  },
+  _type == "section.grid" => {
+    ...,
+    viewAllLink ${resolvedLinkProjection}
+  },
+  _type == "section.cta" => {
+    ...,
+    button {
+      ...,
+      link ${resolvedLinkProjection}
+    }
+  },
+  _type == "section.contact" => {
+    ...,
+    socialLinks[] {
+      ...,
+      link ${resolvedLinkProjection}
+    }
   }
 }`
 
@@ -90,10 +115,13 @@ export interface SectionGrid {
   sectionNumber?: string
   sectionLabel?: string
   title?: string
+  description?: string
+  layout?: 'featured' | 'grid'
+  showTagFilter?: boolean
   source?: 'posts' | 'projects'
   limit?: number
   viewAllLabel?: string
-  viewAllHref?: string
+  viewAllLink?: SanityLink
   alternateBackground?: boolean
 }
 
@@ -102,7 +130,7 @@ export interface SectionCta {
   _key: string
   title?: string
   description?: string
-  button?: {label?: string; href?: string}
+  button?: {label?: string; link?: SanityLink}
   alternateBackground?: boolean
 }
 
@@ -124,14 +152,25 @@ export interface SectionImage {
   fullWidth?: boolean
 }
 
+export interface ContactSocialLink {
+  icon?: string
+  label?: string
+  socialLinkType?: 'link' | 'email'
+  link?: SanityLink
+  emailAddress?: string
+}
+
 export interface SectionContact {
   _type: 'section.contact'
   _key: string
   sectionNumber?: string
   sectionLabel?: string
   title?: string
+  anchor?: string
   description?: string
   email?: string
+  socialLinks?: ContactSocialLink[]
+  location?: string
   alternateBackground?: boolean
 }
 
@@ -147,12 +186,12 @@ export interface SectionTestimonials {
 
 export interface ToolItem {
   name: string
-  description?: string
-  icon?: ImageAsset
+  icon?: string
 }
 
 export interface ToolCategory {
   name?: string
+  description?: string
   items?: ToolItem[]
 }
 
@@ -162,7 +201,21 @@ export interface SectionTools {
   sectionNumber?: string
   sectionLabel?: string
   title?: string
+  anchor?: string
   categories?: ToolCategory[]
+  alternateBackground?: boolean
+}
+
+export interface SectionAbout {
+  _type: 'section.about'
+  _key: string
+  sectionNumber?: string
+  sectionLabel?: string
+  title?: string
+  anchor?: string
+  description?: string
+  image?: ImageAsset
+  stats?: {value: string; label: string}[]
   alternateBackground?: boolean
 }
 
@@ -177,6 +230,7 @@ export type Section =
   | SectionContact
   | SectionTestimonials
   | SectionTools
+  | SectionAbout
 
 export interface Page {
   _type: 'page'
@@ -240,10 +294,12 @@ export const projectsQuery = groq`*[_type == "project" && defined(slug.current)]
   _createdAt,
   title,
   slug,
+  badge,
   description,
   mainImage,
   tags,
-  year
+  year,
+  metrics
 }`
 
 export const projectQuery = groq`*[_type == "project" && slug.current == $slug][0]`
@@ -265,6 +321,7 @@ export interface Project {
   _createdAt: string
   title?: string
   slug: Slug
+  badge?: string
   description?: string
   mainImage?: ImageAsset
   tags?: string[]

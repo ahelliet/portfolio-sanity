@@ -10,6 +10,7 @@
 	import ContactSection from "./ContactSection.svelte";
 	import TestimonialsSection from "./TestimonialsSection.svelte";
 	import ToolsSection from "./ToolsSection.svelte";
+	import AboutSection from "./AboutSection.svelte";
 
 	interface Props {
 		sections: Section[];
@@ -41,5 +42,7 @@
 		<TestimonialsSection {section} />
 	{:else if section._type === "section.tools"}
 		<ToolsSection {section} />
+	{:else if section._type === "section.about"}
+		<AboutSection {section} />
 	{/if}
 {/each}
