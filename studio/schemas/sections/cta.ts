@@ -13,14 +13,14 @@ export default defineType({
       type: 'object',
       fields: [
         defineField({name: 'label', title: 'Label', type: 'string'}),
-        defineField({name: 'href', title: 'Lien', type: 'string'}),
+        defineField({name: 'link', title: 'Lien', type: 'link'}),
       ],
     }),
     defineField({
       name: 'alternateBackground',
       title: 'Fond alterné',
       type: 'boolean',
-      initialValue: true,
+      initialValue: false,
     }),
   ],
   preview: {

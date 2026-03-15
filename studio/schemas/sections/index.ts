@@ -8,6 +8,7 @@ import image from './image'
 import contact from './contact'
 import testimonials from './testimonials'
 import tools from './tools'
+import about from './about'
 
 export const sectionTypes = [
   hero,
@@ -20,4 +21,5 @@ export const sectionTypes = [
   contact,
   testimonials,
   tools,
+  about,
 ]

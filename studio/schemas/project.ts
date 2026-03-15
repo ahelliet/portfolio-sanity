@@ -22,6 +22,12 @@ export default defineType({
       },
     }),
     defineField({
+      name: 'badge',
+      title: 'Badge',
+      type: 'string',
+      description: 'Ex: Étude de cas, Projet personnel, Client...',
+    }),
+    defineField({
       name: 'description',
       title: 'Description',
       type: 'text',

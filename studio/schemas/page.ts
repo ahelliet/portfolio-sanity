@@ -33,6 +33,7 @@ export default defineType({
         defineArrayMember({type: 'section.contact'}),
         defineArrayMember({type: 'section.testimonials'}),
         defineArrayMember({type: 'section.tools'}),
+        defineArrayMember({type: 'section.about'}),
       ],
     }),
   ],

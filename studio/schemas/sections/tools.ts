@@ -8,6 +8,7 @@ export default defineType({
     defineField({name: 'sectionNumber', title: 'Numéro', type: 'string'}),
     defineField({name: 'sectionLabel', title: 'Label', type: 'string'}),
     defineField({name: 'title', title: 'Titre', type: 'string'}),
+    defineField({name: 'anchor', title: 'Ancre', type: 'string', description: 'ID pour le lien d\'ancrage (ex: outils)'}),
     defineField({
       name: 'categories',
       title: 'Catégories',
@@ -17,6 +18,7 @@ export default defineType({
           type: 'object',
           fields: [
             defineField({name: 'name', title: 'Nom de la catégorie', type: 'string'}),
+            defineField({name: 'description', title: 'Description', type: 'text', rows: 2}),
             defineField({
               name: 'items',
               title: 'Outils',
@@ -26,11 +28,10 @@ export default defineType({
                   type: 'object',
                   fields: [
                     defineField({name: 'name', title: 'Nom', type: 'string', validation: (r) => r.required()}),
-                    defineField({name: 'description', title: 'Description', type: 'string'}),
-                    defineField({name: 'icon', title: 'Icône', type: 'image'}),
+                    defineField({name: 'icon', title: 'Icône Lucide', type: 'string', description: 'Nom de l\'icône Lucide (ex: code, server, rocket)'}),
                   ],
                   preview: {
-                    select: {title: 'name', media: 'icon'},
+                    select: {title: 'name', subtitle: 'icon'},
                   },
                 }),
               ],
