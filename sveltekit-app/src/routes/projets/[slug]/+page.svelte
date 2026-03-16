@@ -3,12 +3,37 @@
   import {PortableText} from '@portabletext/svelte'
   import {urlFor} from '$lib/sanity/image'
   import {portableTextComponents} from '$lib/components/portable-text'
+  import {page} from '$app/state'
   import type {PageProps} from './$types'
 
   const {data}: PageProps = $props()
   const query = $derived(useQuery(data))
   const project = $derived($query.data)
+
+  const siteTitle = $derived(data.layout?.title ?? '')
+  const seo = $derived(project?.seo)
+  const pageTitle = $derived(seo?.title ? `${seo.title} | ${siteTitle}` : `${project?.title ?? ''} | ${siteTitle}`)
+  const description = $derived(seo?.description || project?.description || '')
+  const ogImage = $derived(project?.seoImageUrl || data.layout?.ogImageUrl || '')
+  const coverUrl = $derived(project?.mainImage ? urlFor(project.mainImage).width(1280).height(560).url() : '')
 </script>
+
+<svelte:head>
+  {#if coverUrl}<link rel="preload" as="image" href={coverUrl} />{/if}
+  <title>{pageTitle}</title>
+  <meta name="description" content={description} />
+  <link rel="canonical" href={page.url.href} />
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content={pageTitle} />
+  <meta property="og:description" content={description} />
+  <meta property="og:url" content={page.url.href} />
+  {#if ogImage}<meta property="og:image" content={ogImage} />{/if}
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={pageTitle} />
+  <meta name="twitter:description" content={description} />
+  {#if ogImage}<meta name="twitter:image" content={ogImage} />{/if}
+  {#if seo?.noIndex}<meta name="robots" content="noindex" />{/if}
+</svelte:head>
 
 {#if project}
   <article class="pt-24 pb-16">
@@ -34,7 +59,7 @@
     <!-- Main Screenshot -->
     {#if project.mainImage}
       <div class="mt-10 px-20">
-        <img src={urlFor(project.mainImage).width(1280).height(560).url()} alt={project.title} class="w-full rounded-lg object-cover" />
+        <img src={urlFor(project.mainImage).width(1280).height(560).url()} alt={project.title} class="w-full rounded-lg object-cover" fetchpriority="high" loading="eager" />
       </div>
     {/if}
 

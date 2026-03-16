@@ -19,4 +19,10 @@ export const handle = sequence(
   // Sets up the loadQuery helper function which will be used for fetching data
   // on the server
   handleQueryLoader(),
+  // Inject lang attribute into HTML
+  async ({event, resolve}) => {
+    return resolve(event, {
+      transformPageChunk: ({html}) => html.replace('%lang%', event.locals.lang || 'fr'),
+    })
+  },
 )

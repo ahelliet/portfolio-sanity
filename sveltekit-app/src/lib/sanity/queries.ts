@@ -2,6 +2,22 @@ import type {PortableTextBlock} from '@portabletext/types'
 import type {ImageAsset, Slug} from '@sanity/types'
 import groq from 'groq'
 
+// ─── SEO ─────────────────────────────────────────────────
+
+export interface SeoData {
+  title: string
+  description: string
+  ogImageUrl?: string
+  noIndex: boolean
+}
+
+const seoProjection = (titleFallback: string, descFallback?: string) => `"seo": {
+  "title": coalesce(seo.title, ${titleFallback}, ""),
+  "description": coalesce(seo.description, ${descFallback ? `${descFallback}, ` : ""}""),
+  "ogImageUrl": seo.image.asset->url,
+  "noIndex": seo.noIndex == true
+}`
+
 // ─── Pages (page builder) ────────────────────────────────
 
 const linkProjection = `{
@@ -51,11 +67,13 @@ export const pageBySlugQuery = groq`*[_type == "page" && slug.current == $slug][
   _type,
   title,
   slug,
+  ${seoProjection('title')},
   ${sectionsProjection}
 }`
 
 export const homepageQuery = groq`*[_type == "homePage"][0] {
   _type,
+  ${seoProjection('"Accueil"')},
   ${sectionsProjection}
 }`
 
@@ -86,7 +104,6 @@ export interface SectionHero {
   title?: string
   tagline?: string
   subtitle?: string
-  image?: ImageAsset
   ctas?: HeroCta[]
 }
 
@@ -233,9 +250,10 @@ export type Section =
   | SectionAbout
 
 export interface Page {
-  _type: 'page'
+  _type: 'page' | 'homePage'
   title?: string
   slug?: Slug
+  seo?: SeoData
   sections?: Section[]
 }
 
@@ -262,6 +280,8 @@ export const postQuery = groq`*[_type == "post" && slug.current == $slug][0] {
   tags,
   readingTime,
   body,
+  ${seoProjection('title', 'excerpt')},
+  "seoImageUrl": coalesce(seo.image.asset->url, mainImage.asset->url),
   relatedPosts[]->{
     _type,
     _createdAt,
@@ -284,6 +304,8 @@ export interface Post {
   tags?: string[]
   readingTime?: number
   body?: PortableTextBlock[]
+  seo?: SeoData
+  seoImageUrl?: string
   relatedPosts?: Post[]
 }
 
@@ -302,7 +324,11 @@ export const projectsQuery = groq`*[_type == "project" && defined(slug.current)]
   metrics
 }`
 
-export const projectQuery = groq`*[_type == "project" && slug.current == $slug][0]`
+export const projectQuery = groq`*[_type == "project" && slug.current == $slug][0] {
+  ...,
+  ${seoProjection('title', 'description')},
+  "seoImageUrl": coalesce(seo.image.asset->url, mainImage.asset->url)
+}`
 
 export interface Metric {
   value: string
@@ -325,7 +351,7 @@ export interface Project {
   description?: string
   mainImage?: ImageAsset
   tags?: string[]
-  year?: string
+  year?: number
   challengeTitle?: string
   challengeBody?: PortableTextBlock[]
   solutionTitle?: string
@@ -333,12 +359,17 @@ export interface Project {
   resultsTitle?: string
   metrics?: Metric[]
   stack?: StackItem[]
+  seo?: SeoData
+  seoImageUrl?: string
 }
 
 // ─── Layout (Nav + Footer) ───────────────────────────────
 
 export const layoutQuery = groq`*[_type == "siteSettings"][0] {
   title,
+  description,
+  language,
+  "ogImageUrl": ogImage.asset->url,
   logo,
   authorName,
   authorAvatar,
@@ -368,6 +399,9 @@ export interface NavLink {
 
 export interface LayoutData {
   title?: string
+  description?: string
+  language?: string
+  ogImageUrl?: string
   logo?: ImageAsset
   authorName?: string
   authorAvatar?: ImageAsset

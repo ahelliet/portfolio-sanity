@@ -4,13 +4,38 @@
   import {formatDate} from '$lib/utils/index'
   import {urlFor} from '$lib/sanity/image'
   import {portableTextComponents} from '$lib/components/portable-text'
+  import {page} from '$app/state'
   import type {PageProps} from './$types'
 
   const {data}: PageProps = $props()
   const query = $derived(useQuery(data))
   const post = $derived($query.data)
   const author = $derived(data.layout)
+
+  const siteTitle = $derived(data.layout?.title ?? '')
+  const seo = $derived(post?.seo)
+  const pageTitle = $derived(seo?.title ? `${seo.title} | ${siteTitle}` : `${post?.title ?? ''} | ${siteTitle}`)
+  const description = $derived(seo?.description || post?.excerpt || '')
+  const ogImage = $derived(post?.seoImageUrl || data.layout?.ogImageUrl || '')
+  const coverUrl = $derived(post?.mainImage ? urlFor(post.mainImage).width(1280).height(480).url() : '')
 </script>
+
+<svelte:head>
+  {#if coverUrl}<link rel="preload" as="image" href={coverUrl} />{/if}
+  <title>{pageTitle}</title>
+  <meta name="description" content={description} />
+  <link rel="canonical" href={page.url.href} />
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content={pageTitle} />
+  <meta property="og:description" content={description} />
+  <meta property="og:url" content={page.url.href} />
+  {#if ogImage}<meta property="og:image" content={ogImage} />{/if}
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={pageTitle} />
+  <meta name="twitter:description" content={description} />
+  {#if ogImage}<meta name="twitter:image" content={ogImage} />{/if}
+  {#if seo?.noIndex}<meta name="robots" content="noindex" />{/if}
+</svelte:head>
 
 {#if post}
   <article class="px-20 pt-24 pb-16">
@@ -50,6 +75,8 @@
         class="mt-8 w-full rounded-lg object-cover"
         src={urlFor(post.mainImage).width(1280).height(480).url()}
         alt="Cover image for {post.title}"
+        fetchpriority="high"
+        loading="eager"
       />
     {/if}
 

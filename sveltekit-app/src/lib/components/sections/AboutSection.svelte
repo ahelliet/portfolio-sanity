@@ -23,6 +23,8 @@
 						src={urlFor(section.image).width(760).height(960).url()}
 						alt={section.title ?? ""}
 						class="h-[480px] w-full object-cover"
+						fetchpriority="high"
+						loading="eager"
 					/>
 				</div>
 			{/if}

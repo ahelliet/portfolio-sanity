@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { Button } from "$lib/components/ui/button/index.js";
 	import DynamicIcon from "$lib/components/DynamicIcon.svelte";
-	import { urlFor } from "$lib/sanity/image";
 	import type { SectionHero } from "$lib/sanity/queries";
 	import { resolveLink } from "$lib/utils/index.js";
 
@@ -66,87 +65,77 @@
 			{/if}
 		</div>
 
-		<!-- Right column -->
-		{#if section.image}
-			<div class="w-[520px] shrink-0 overflow-hidden rounded-xl shadow-[0_8px_40px_rgba(0,0,0,0.25)]">
-				<img
-					src={urlFor(section.image).width(1040).height(800).url()}
-					alt={section.title ?? ""}
-					class="h-full w-full object-cover"
-				/>
+		<!-- Right column: Terminal -->
+		<div class="w-[520px] shrink-0 overflow-hidden rounded-xl bg-[#111118] shadow-[0_8px_40px_rgba(0,0,0,0.25)]">
+			<!-- Terminal header -->
+			<div class="flex items-center justify-between bg-[#0c0c12] px-4 py-3">
+				<div class="flex gap-2">
+					<div class="size-3 rounded-full bg-[#ff5f57]"></div>
+					<div class="size-3 rounded-full bg-[#febc2e]"></div>
+					<div class="size-3 rounded-full bg-[#28c840]"></div>
+				</div>
+				<span class="font-mono text-xs text-[#6c7086]">+page.svelte</span>
 			</div>
-		{:else}
-			<div class="w-[520px] shrink-0 overflow-hidden rounded-xl bg-[#111118] shadow-[0_8px_40px_rgba(0,0,0,0.25)]">
-				<!-- Terminal header -->
-				<div class="flex items-center justify-between bg-[#0c0c12] px-4 py-3">
-					<div class="flex gap-2">
-						<div class="size-3 rounded-full bg-[#ff5f57]"></div>
-						<div class="size-3 rounded-full bg-[#febc2e]"></div>
-						<div class="size-3 rounded-full bg-[#28c840]"></div>
-					</div>
-					<span class="font-mono text-xs text-[#6c7086]">+page.svelte</span>
-				</div>
 
-				<!-- Tabs bar -->
-				<div class="flex bg-[#0e0e15]">
-					<div class="border-b-2 border-primary bg-[#111118] px-4 py-2.5 font-mono text-[11px] text-[#cdd6f4]">
-						+page.svelte
-					</div>
-					<div class="px-4 py-2.5 font-mono text-[11px] text-[#6c7086]">
-						+layout.svelte
-					</div>
-					<div class="px-4 py-2.5 font-mono text-[11px] text-[#6c7086]">
-						schema.ts
-					</div>
+			<!-- Tabs bar -->
+			<div class="flex bg-[#0e0e15]">
+				<div class="border-b-2 border-primary bg-[#111118] px-4 py-2.5 font-mono text-[11px] text-[#cdd6f4]">
+					+page.svelte
 				</div>
-
-				<!-- Code body -->
-				<div class="p-5 font-mono text-xs leading-[2]">
-					<div>
-						<span class="text-[#89b4fa]">&lt;script</span>
-						<span class="text-[#a6e3a1]"> lang="ts"</span><span class="text-[#89b4fa]">&gt;</span>
-					</div>
-					<div class="text-[#6c7086]">
-						&nbsp;&nbsp;import &#123; fly &#125; from 'svelte/transition';
-					</div>
-					<div class="text-[#6c7086]">
-						&nbsp;&nbsp;import type &#123; Developer &#125; from '$lib';
-					</div>
-					<div>&nbsp;</div>
-					<div>
-						<span class="text-[#cdd6f4]">&nbsp;&nbsp;const me</span><span class="text-[#89b4fa]">: Developer</span>
-						<span class="text-[#cdd6f4]"> = &#123;</span>
-					</div>
-					<div>
-						<span class="text-[#cdd6f4]">&nbsp;&nbsp;&nbsp;&nbsp;name: </span><span class="text-[#a6e3a1]">'Anthony Helliet'</span><span class="text-[#cdd6f4]">,</span>
-					</div>
-					<div>
-						<span class="text-[#cdd6f4]">&nbsp;&nbsp;&nbsp;&nbsp;passion: </span><span class="text-[#a6e3a1]">'building things'</span><span class="text-[#cdd6f4]">,</span>
-					</div>
-					<div>
-						<span class="text-[#cdd6f4]">&nbsp;&nbsp;&nbsp;&nbsp;stack: </span><span class="text-[#f9e2af]">['Svelte', 'Python', 'Typescript']</span><span class="text-[#cdd6f4]">,</span>
-					</div>
-					<div>
-						<span class="text-[#cdd6f4]">&nbsp;&nbsp;&nbsp;&nbsp;available: </span><span class="text-[#89b4fa]">true</span><span class="text-[#cdd6f4]">,</span>
-					</div>
-					<div>
-						<span class="text-[#cdd6f4]">&nbsp;&nbsp;&#125;;</span>
-					</div>
-					<div>
-						<span class="text-[#89b4fa]">&lt;/script&gt;</span>
-					</div>
-					<div>&nbsp;</div>
-					<div>
-						<span class="text-[#cba6f7]">&#123;#if me.available&#125;</span>
-					</div>
-					<div>
-						<span class="text-primary">&nbsp;&nbsp;&lt;HireMe developer=&#123;me&#125; /&gt;</span>
-					</div>
-					<div>
-						<span class="text-[#cba6f7]">&#123;/if&#125;</span>
-					</div>
+				<div class="px-4 py-2.5 font-mono text-[11px] text-[#6c7086]">
+					+layout.svelte
+				</div>
+				<div class="px-4 py-2.5 font-mono text-[11px] text-[#6c7086]">
+					schema.ts
 				</div>
 			</div>
-		{/if}
+
+			<!-- Code body -->
+			<div class="p-5 font-mono text-xs leading-[2]">
+				<div>
+					<span class="text-[#89b4fa]">&lt;script</span>
+					<span class="text-[#a6e3a1]"> lang="ts"</span><span class="text-[#89b4fa]">&gt;</span>
+				</div>
+				<div class="text-[#6c7086]">
+					&nbsp;&nbsp;import &#123; fly &#125; from 'svelte/transition';
+				</div>
+				<div class="text-[#6c7086]">
+					&nbsp;&nbsp;import type &#123; Developer &#125; from '$lib';
+				</div>
+				<div>&nbsp;</div>
+				<div>
+					<span class="text-[#cdd6f4]">&nbsp;&nbsp;const me</span><span class="text-[#89b4fa]">: Developer</span>
+					<span class="text-[#cdd6f4]"> = &#123;</span>
+				</div>
+				<div>
+					<span class="text-[#cdd6f4]">&nbsp;&nbsp;&nbsp;&nbsp;name: </span><span class="text-[#a6e3a1]">'Anthony Helliet'</span><span class="text-[#cdd6f4]">,</span>
+				</div>
+				<div>
+					<span class="text-[#cdd6f4]">&nbsp;&nbsp;&nbsp;&nbsp;passion: </span><span class="text-[#a6e3a1]">'building things'</span><span class="text-[#cdd6f4]">,</span>
+				</div>
+				<div>
+					<span class="text-[#cdd6f4]">&nbsp;&nbsp;&nbsp;&nbsp;stack: </span><span class="text-[#f9e2af]">['Svelte', 'Python', 'Typescript']</span><span class="text-[#cdd6f4]">,</span>
+				</div>
+				<div>
+					<span class="text-[#cdd6f4]">&nbsp;&nbsp;&nbsp;&nbsp;available: </span><span class="text-[#89b4fa]">true</span><span class="text-[#cdd6f4]">,</span>
+				</div>
+				<div>
+					<span class="text-[#cdd6f4]">&nbsp;&nbsp;&#125;;</span>
+				</div>
+				<div>
+					<span class="text-[#89b4fa]">&lt;/script&gt;</span>
+				</div>
+				<div>&nbsp;</div>
+				<div>
+					<span class="text-[#cba6f7]">&#123;#if me.available&#125;</span>
+				</div>
+				<div>
+					<span class="text-primary">&nbsp;&nbsp;&lt;HireMe developer=&#123;me&#125; /&gt;</span>
+				</div>
+				<div>
+					<span class="text-[#cba6f7]">&#123;/if&#125;</span>
+				</div>
+			</div>
+		</div>
 	</div>
 </section>

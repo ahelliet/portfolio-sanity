@@ -5,7 +5,9 @@ import type {SanityLocals} from '@sanity/sveltekit'
 // for information about these interfaces
 declare global {
   namespace App {
-    interface Locals extends SanityLocals {}
+    interface Locals extends SanityLocals {
+      lang?: string
+    }
   }
 }
 
