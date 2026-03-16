@@ -1,9 +1,11 @@
 import {defineField, defineType} from 'sanity'
+import {DocumentTextIcon} from '@sanity/icons'
 
 export default defineType({
   name: 'section.richText',
   title: 'Texte riche',
   type: 'object',
+  icon: DocumentTextIcon,
   fields: [
     defineField({name: 'sectionNumber', title: 'Numéro', type: 'string', description: 'Ex: 01, 02...'}),
     defineField({name: 'sectionLabel', title: 'Label', type: 'string', description: 'Ex: À propos, Le défi...'}),

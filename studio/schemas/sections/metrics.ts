@@ -1,9 +1,11 @@
 import {defineField, defineType, defineArrayMember} from 'sanity'
+import {BarChartIcon} from '@sanity/icons'
 
 export default defineType({
   name: 'section.metrics',
   title: 'Métriques',
   type: 'object',
+  icon: BarChartIcon,
   fields: [
     defineField({name: 'sectionNumber', title: 'Numéro', type: 'string'}),
     defineField({name: 'sectionLabel', title: 'Label', type: 'string'}),

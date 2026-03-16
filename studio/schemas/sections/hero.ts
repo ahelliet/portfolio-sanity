@@ -1,15 +1,16 @@
 import {defineField, defineType, defineArrayMember} from 'sanity'
+import {StarIcon} from '@sanity/icons'
 
 export default defineType({
   name: 'section.hero',
   title: 'Hero',
   type: 'object',
+  icon: StarIcon,
   fields: [
     defineField({name: 'badge', title: 'Badge', type: 'string', description: 'Texte du badge de statut (ex: "Disponible en freelance · Remote mondial")'}),
     defineField({name: 'title', title: 'Titre', type: 'string'}),
     defineField({name: 'tagline', title: 'Tagline', type: 'text', rows: 2, description: 'Sous-titre coloré affiché sous le titre (retours à la ligne respectés)'}),
     defineField({name: 'subtitle', title: 'Description', type: 'text', rows: 3}),
-    defineField({name: 'image', title: 'Image', type: 'image', options: {hotspot: true}}),
     defineField({
       name: 'ctas',
       title: 'Boutons',

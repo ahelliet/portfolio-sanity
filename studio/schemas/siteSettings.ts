@@ -1,10 +1,12 @@
 import {defineField, defineType, defineArrayMember} from 'sanity'
+import {CogIcon} from '@sanity/icons'
 import {ButtonStyleInput} from '../components/ButtonStyleInput'
 
 export default defineType({
   name: 'siteSettings',
   title: 'Site Settings',
   type: 'document',
+  icon: CogIcon,
   groups: [
     {name: 'global', title: 'Global', default: true},
     {name: 'author', title: 'Auteur'},
@@ -85,7 +87,7 @@ export default defineType({
           type: 'object',
           fields: [
             defineField({name: 'platform', title: 'Platform', type: 'string'}),
-            defineField({name: 'url', title: 'URL', type: 'url'}),
+            defineField({name: 'url', title: 'URL', type: 'url', validation: (r) => r.required().uri({scheme: ['http', 'https']})}),
           ],
           preview: {
             select: {title: 'platform', subtitle: 'url'},

@@ -1,6 +1,7 @@
 import blockContent from './blockContent'
 import homePage from './homePage'
 import link from './objects/link'
+import seo from './objects/seo'
 import mermaid from './mermaid'
 import page from './page'
 import post from './post'
@@ -21,6 +22,7 @@ export const schemaTypes = [
   mermaid,
   // Object types
   link,
+  seo,
   // Section types
   ...sectionTypes,
 ]

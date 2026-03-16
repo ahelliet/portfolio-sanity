@@ -1,16 +1,18 @@
 import {defineField, defineType, defineArrayMember} from 'sanity'
+import {EnvelopeIcon} from '@sanity/icons'
 
 export default defineType({
   name: 'section.contact',
   title: 'Contact',
   type: 'object',
+  icon: EnvelopeIcon,
   fields: [
     defineField({name: 'sectionNumber', title: 'Numéro', type: 'string'}),
     defineField({name: 'sectionLabel', title: 'Label', type: 'string'}),
     defineField({name: 'title', title: 'Titre', type: 'string'}),
     defineField({name: 'anchor', title: 'Ancre', type: 'string', description: 'ID pour le lien d\'ancrage (ex: contact)'}),
     defineField({name: 'description', title: 'Description', type: 'text', rows: 3}),
-    defineField({name: 'email', title: 'Email', type: 'string'}),
+    defineField({name: 'email', title: 'Email', type: 'string', validation: (r) => r.email()}),
     defineField({
       name: 'socialLinks',
       title: 'Liens sociaux',

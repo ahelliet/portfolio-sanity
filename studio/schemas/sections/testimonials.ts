@@ -1,9 +1,11 @@
 import {defineField, defineType, defineArrayMember} from 'sanity'
+import {CommentIcon} from '@sanity/icons'
 
 export default defineType({
   name: 'section.testimonials',
   title: 'Témoignages',
   type: 'object',
+  icon: CommentIcon,
   fields: [
     defineField({name: 'sectionNumber', title: 'Numéro', type: 'string'}),
     defineField({name: 'sectionLabel', title: 'Label', type: 'string'}),

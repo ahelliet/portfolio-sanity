@@ -1,10 +1,11 @@
 import {defineField, defineType} from 'sanity'
-import {mediaAssetSource} from 'sanity-plugin-media'
+import {LinkIcon} from '@sanity/icons'
 
 export default defineType({
   name: 'link',
   title: 'Lien',
   type: 'object',
+  icon: LinkIcon,
   fields: [
     defineField({
       name: 'linkType',

@@ -1,4 +1,4 @@
-import {defineType, defineArrayMember} from 'sanity'
+import {defineType, defineField, defineArrayMember} from 'sanity'
 
 /**
  * This is the schema definition for the rich text fields used for
@@ -52,11 +52,11 @@ export default defineType({
             name: 'link',
             type: 'object',
             fields: [
-              {
+              defineField({
                 title: 'URL',
                 name: 'href',
                 type: 'url',
-              },
+              }),
             ],
           },
         ],

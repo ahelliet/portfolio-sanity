@@ -1,10 +1,22 @@
 import {defineField, defineType, defineArrayMember} from 'sanity'
+import {DocumentTextIcon} from '@sanity/icons'
 
 export default defineType({
   name: 'post',
   title: 'Post',
   type: 'document',
+  icon: DocumentTextIcon,
+  groups: [
+    {name: 'content', title: 'Contenu', default: true},
+    {name: 'seo', title: 'SEO'},
+  ],
   fields: [
+    defineField({
+      name: 'seo',
+      title: 'SEO',
+      type: 'seo',
+      group: 'seo',
+    }),
     defineField({
       name: 'title',
       title: 'Title',
@@ -51,6 +63,12 @@ export default defineType({
       name: 'body',
       title: 'Body',
       type: 'blockContent',
+    }),
+    defineField({
+      name: 'publishedAt',
+      title: 'Published At',
+      type: 'datetime',
+      initialValue: () => new Date().toISOString(),
     }),
     defineField({
       name: 'relatedPosts',

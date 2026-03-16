@@ -1,9 +1,11 @@
 import {defineField, defineType, defineArrayMember} from 'sanity'
+import {WrenchIcon} from '@sanity/icons'
 
 export default defineType({
   name: 'section.tools',
   title: 'Outils & Technologies',
   type: 'object',
+  icon: WrenchIcon,
   fields: [
     defineField({name: 'sectionNumber', title: 'Numéro', type: 'string'}),
     defineField({name: 'sectionLabel', title: 'Label', type: 'string'}),

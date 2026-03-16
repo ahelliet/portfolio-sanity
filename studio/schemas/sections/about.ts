@@ -1,9 +1,11 @@
-import {defineField, defineType} from 'sanity'
+import {defineField, defineType, defineArrayMember} from 'sanity'
+import {UserIcon} from '@sanity/icons'
 
 export default defineType({
   name: 'section.about',
   title: 'À propos',
   type: 'object',
+  icon: UserIcon,
   fields: [
     defineField({name: 'sectionNumber', title: 'Numéro', type: 'string', description: 'Ex: 01, 02...'}),
     defineField({name: 'sectionLabel', title: 'Label', type: 'string', description: 'Ex: À propos'}),
@@ -16,7 +18,7 @@ export default defineType({
       title: 'Statistiques',
       type: 'array',
       of: [
-        {
+        defineArrayMember({
           type: 'object',
           fields: [
             defineField({name: 'value', title: 'Valeur', type: 'string'}),
@@ -25,7 +27,7 @@ export default defineType({
           preview: {
             select: {title: 'value', subtitle: 'label'},
           },
-        },
+        }),
       ],
     }),
     defineField({

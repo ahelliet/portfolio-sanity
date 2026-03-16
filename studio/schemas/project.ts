@@ -1,10 +1,22 @@
 import {defineField, defineType, defineArrayMember} from 'sanity'
+import {RocketIcon} from '@sanity/icons'
 
 export default defineType({
   name: 'project',
   title: 'Project',
   type: 'document',
+  icon: RocketIcon,
+  groups: [
+    {name: 'content', title: 'Contenu', default: true},
+    {name: 'seo', title: 'SEO'},
+  ],
   fields: [
+    defineField({
+      name: 'seo',
+      title: 'SEO',
+      type: 'seo',
+      group: 'seo',
+    }),
     defineField({
       name: 'title',
       title: 'Title',
@@ -49,7 +61,7 @@ export default defineType({
     defineField({
       name: 'year',
       title: 'Year',
-      type: 'string',
+      type: 'number',
     }),
     defineField({
       name: 'challengeTitle',

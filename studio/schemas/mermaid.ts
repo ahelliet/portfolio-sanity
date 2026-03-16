@@ -1,4 +1,4 @@
-import {defineType} from 'sanity'
+import {defineType, defineField} from 'sanity'
 import {MermaidInput} from '../components/MermaidInput'
 import {MermaidBlockPreview} from '../components/MermaidBlockPreview'
 
@@ -11,12 +11,12 @@ export default defineType({
     preview: MermaidBlockPreview,
   },
   fields: [
-    {
+    defineField({
       name: 'code',
       title: 'Mermaid Code',
       type: 'text',
       rows: 10,
-    },
+    }),
   ],
   preview: {
     select: {

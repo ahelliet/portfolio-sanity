@@ -1,9 +1,11 @@
 import {defineField, defineType} from 'sanity'
+import {ThLargeIcon} from '@sanity/icons'
 
 export default defineType({
   name: 'section.grid',
   title: 'Grille',
   type: 'object',
+  icon: ThLargeIcon,
   fields: [
     defineField({
       name: 'sectionNumber',
